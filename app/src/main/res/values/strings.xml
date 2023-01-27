@@ -15,4 +15,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">这是关于页面</string>
+    <string name="login_title">登录</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
 </resources>
