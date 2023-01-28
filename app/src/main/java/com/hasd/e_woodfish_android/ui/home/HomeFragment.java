@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.hasd.e_woodfish_android.R;
 import com.hasd.e_woodfish_android.databinding.FragmentHomeBinding;
 import com.hasd.e_woodfish_android.ui.login.LoginActivity;
 import com.hasd.e_woodfish_android.utils.ToastUtil;
@@ -24,12 +26,16 @@ public class HomeFragment extends Fragment {
     private Button loginOut;
     private SharedPreferences preferences;
     private static final String TAG = "Home_Page";
+    private ImageView muyu;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         userInfo = binding.tvUserInfo;
         loginOut = binding.btnLoginOut;
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ImageView muyu = view.findViewById(R.id.iv_muyu);
+        muyu.setImageResource(R.drawable.woodfish_purple);
 
         //点击事件
         loginOut.setOnClickListener(new View.OnClickListener() {

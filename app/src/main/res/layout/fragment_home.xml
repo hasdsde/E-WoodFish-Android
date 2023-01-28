@@ -32,6 +32,12 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
-
+        <ImageView
+            android:id="@+id/iv_muyu"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="@string/muyu" />
     </LinearLayout>
+
+
 </LinearLayout>
