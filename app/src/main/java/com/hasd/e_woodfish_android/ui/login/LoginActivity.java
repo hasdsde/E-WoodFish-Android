@@ -1,6 +1,7 @@
 package com.hasd.e_woodfish_android.ui.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +12,12 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
+import com.hasd.e_woodfish_android.MainActivity;
 import com.hasd.e_woodfish_android.R;
 import com.hasd.e_woodfish_android.utils.Api;
 import com.hasd.e_woodfish_android.utils.DialogUtl;
 import com.hasd.e_woodfish_android.utils.MyApplication;
+import com.hasd.e_woodfish_android.utils.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,6 +57,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String username = et_username.getText().toString();
         String password = et_password.getText().toString();
         JSONObject jsonObject = new JSONObject();
+        Intent intent = new Intent(this, MainActivity.class);
+        //跳转后不再返回
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             jsonObject.put("username", username);
             jsonObject.put("password", password);
@@ -70,7 +76,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 editor.putString("username", username);
                                 editor.putInt("score", 0);
                                 editor.apply();
-                                DialogUtl.showDialog(LoginActivity.this, "注册成功");
+                                ToastUtil.showToast(LoginActivity.this, "注册成功");
+                                startActivity(intent);
                             } else {
                                 DialogUtl.showDialog(LoginActivity.this, jsonObject.get("msg").toString());
                             }
@@ -97,7 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 editor.putString("username", data.get("username").toString());
                                 editor.putInt("score", (Integer) data.get("score"));
                                 editor.apply();
-                                DialogUtl.showDialog(LoginActivity.this, "登录成功");
+                                ToastUtil.showToast(LoginActivity.this, "登录成功");
+                                startActivity(intent);
                             } else {
                                 DialogUtl.showDialog(LoginActivity.this, jsonObject.get("msg").toString());
                             }
