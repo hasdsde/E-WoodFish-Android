@@ -1,6 +1,7 @@
 package com.hasd.e_woodfish_android.ui.login;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,6 @@ import com.hasd.e_woodfish_android.R;
 import com.hasd.e_woodfish_android.utils.Api;
 import com.hasd.e_woodfish_android.utils.DialogUtl;
 import com.hasd.e_woodfish_android.utils.MyApplication;
-import com.hasd.e_woodfish_android.utils.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btn_login;
     private Button btn_register;
     private final String TAG = "LOGIN_PAGE";
+    private SharedPreferences userDataPreference;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btn_register = findViewById(R.id.btn_register);
         btn_login.setOnClickListener(this);
         btn_register.setOnClickListener(this);
+
+        userDataPreference = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        editor = userDataPreference.edit();
 
     }
 
@@ -57,7 +62,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         switch (view.getId()) {
             case R.id.btn_register:
-                ToastUtil.showToast(this, "你点击了注册");
+                try {
+                    Api.sendPostRequest("/api/user/reg", jsonObject, this, new Api.VolleyJsonCallback() {
+                        @Override
+                        public void onSuccess(JSONObject jsonObject) throws JSONException {
+                            if (jsonObject.get("code").toString().equals("200")) {
+                                editor.putString("username", username);
+                                editor.putInt("score", 0);
+                                editor.apply();
+                                DialogUtl.showDialog(LoginActivity.this, "注册成功");
+                            } else {
+                                DialogUtl.showDialog(LoginActivity.this, jsonObject.get("msg").toString());
+                            }
+                        }
+
+                        @Override
+                        public void onError(VolleyError error) {
+
+                        }
+                    });
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btn_login:
                 try {
@@ -66,8 +92,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         public void onSuccess(JSONObject jsonObject) throws JSONException {
                             Log.d(TAG, "onSuccess: " + jsonObject.toString());
                             if (jsonObject.get("code").toString().equals("200")) {
-                                Log.d(TAG, "onSuccess: 登录成功");
+                                //将数据存储起来
+                                JSONObject data = (JSONObject) jsonObject.get("data");
+                                editor.putString("username", data.get("username").toString());
+                                editor.putInt("score", (Integer) data.get("score"));
+                                editor.apply();
                                 DialogUtl.showDialog(LoginActivity.this, "登录成功");
+                            } else {
+                                DialogUtl.showDialog(LoginActivity.this, jsonObject.get("msg").toString());
                             }
                         }
 

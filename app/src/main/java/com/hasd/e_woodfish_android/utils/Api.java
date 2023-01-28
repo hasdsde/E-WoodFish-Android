@@ -68,12 +68,12 @@ public class Api {
 
     }
 
-
     public interface VolleyCallback {
         void onSuccess(String result);
 
         void onError(VolleyError error);
     }
+
 
     public interface VolleyJsonCallback {
         void onSuccess(JSONObject jsonObject) throws JSONException;
