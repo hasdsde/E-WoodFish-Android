@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.hasd.e_woodfish_android.databinding.FragmentHomeBinding;
@@ -32,7 +30,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         userInfo = binding.tvUserInfo;
         loginOut = binding.btnLoginOut;
-        userInfo.setText("测试");
+
         //点击事件
         loginOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,13 +42,6 @@ public class HomeFragment extends Fragment {
                 JumpToLogin();
             }
         });
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         //检测是否存在记录
         String username = preferences.getString("username", "");
         Integer score = preferences.getInt("score", 0);
@@ -58,9 +49,9 @@ public class HomeFragment extends Fragment {
             JumpToLogin();
         } else {
             ToastUtil.showToast(getActivity(), "载入信息成功");
+            userInfo.setText(String.format("%s,分数: %d", username, score));
         }
-        Log.d(TAG, "onCreate: " + username);
-
+        return binding.getRoot();
     }
 
     @Override
