@@ -24,4 +24,6 @@
     <string name="btn_refresh">刷新</string>
     <string name="muyu">muyu</string>
     <string name="click">点击</string>
+    <string name="item">item</string>
+    <string name="use">使用</string>
 </resources>
