@@ -28,4 +28,11 @@
     <string name="use">使用</string>
     <string name="item_title">标题</string>
     <string name="item_desc">道具介绍</string>
+    <string name="str_index">index</string>
+    <string name="str_name">name</string>
+    <string name="str_age">afe\'</string>
+    <string name="str_sex">sex</string>
+    <string name="str_department">depart</string>
+    <string name="str_rank">rank</string>
+    <string name="str_sales">sale</string>
 </resources>
