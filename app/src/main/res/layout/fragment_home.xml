@@ -43,7 +43,7 @@
         android:layout_height="200dp"
         android:contentDescription="@string/muyu"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/woodfish_Black"
+        android:src="@drawable/woodfish_black"
         android:foregroundGravity="center" />
 
     <LinearLayout

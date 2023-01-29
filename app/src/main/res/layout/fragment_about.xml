@@ -26,4 +26,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="这里是关于页面" />
 
+    <ImageView
+        android:id="@+id/iv_muyu"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:contentDescription="@string/muyu"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/woodfish_black"
+        android:foregroundGravity="center" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
