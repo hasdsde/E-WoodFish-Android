@@ -89,7 +89,6 @@ public class HomeFragment extends Fragment {
             }
         });
         //检测是否存在记录
-
         if (username.isEmpty()) {
             JumpToLogin();
         } else {

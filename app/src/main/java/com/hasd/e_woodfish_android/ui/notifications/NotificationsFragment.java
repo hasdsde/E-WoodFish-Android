@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.hasd.e_woodfish_android.R;
 import com.hasd.e_woodfish_android.databinding.FragmentNotificationsBinding;
 import com.hasd.e_woodfish_android.utils.Api;
+import com.hasd.e_woodfish_android.utils.ToastUtil;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -50,9 +50,6 @@ public class NotificationsFragment extends Fragment {
                     JSONArray data = res.getJSONArray("data");
                     for (int i = 0; i < data.size(); i++) {
                         JSONObject item = data.getJSONObject(i);
-                        Log.d(TAG, "item:" + item.getStr("username"));
-
-
                         tableRow = new TableRow(getActivity());
                         tableRow.setGravity(Gravity.CENTER);
 
@@ -105,7 +102,9 @@ public class NotificationsFragment extends Fragment {
         Refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                getActivity().recreate();
+                //不好弄
+                ToastUtil.showToast(getActivity(), "刷新完成");
             }
         });
         return binding.getRoot();
