@@ -26,4 +26,6 @@
     <string name="click">点击</string>
     <string name="item">item</string>
     <string name="use">使用</string>
+    <string name="item_title">标题</string>
+    <string name="item_desc">道具介绍</string>
 </resources>

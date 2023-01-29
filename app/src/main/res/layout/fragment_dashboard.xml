@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@color/purple_500"
-                android:text="物品标题1" />
+                android:text="@string/item_title" />
 
             <TextView
                 android:layout_marginTop="10dp"
@@ -76,9 +76,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
-                android:text="物品介绍1物品介绍1物品介绍1物品介绍1" />
+                android:text="@string/item_desc" />
 
             <Button
+                android:id="@+id/item_click1"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -110,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@color/purple_500"
-                android:text="物品标题1" />
+                android:text="@string/item_title" />
 
             <TextView
                 android:id="@+id/item_desc2"
@@ -119,9 +120,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:layout_marginTop="10dp"
-                android:text="物品介绍1物品介绍1物品介绍1物品介绍1" />
+                android:text="@string/item_desc" />
 
             <Button
+                android:id="@+id/item_click2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
@@ -153,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@color/purple_500"
-                android:text="物品标题1" />
+                android:text="@string/item_title" />
 
             <TextView
                 android:id="@+id/item_desc3"
@@ -162,9 +164,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:layout_marginTop="10dp"
-                android:text="物品介绍1物品介绍1物品介绍1物品介绍1" />
+                android:text="@string/item_desc" />
 
             <Button
+                android:id="@+id/item_click3"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
