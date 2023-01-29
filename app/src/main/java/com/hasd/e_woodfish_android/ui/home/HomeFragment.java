@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.VolleyError;
 import com.hasd.e_woodfish_android.R;
 import com.hasd.e_woodfish_android.databinding.FragmentHomeBinding;
 import com.hasd.e_woodfish_android.ui.login.LoginActivity;
+import com.hasd.e_woodfish_android.utils.Api;
 import com.hasd.e_woodfish_android.utils.ToastUtil;
+
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 
 public class HomeFragment extends Fragment {
 
@@ -27,16 +33,23 @@ public class HomeFragment extends Fragment {
     private SharedPreferences preferences;
     private static final String TAG = "Home_Page";
     private ImageView muyu;
+    private Button btn_click;
+    private Integer score;
+    private String username;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+
         userInfo = binding.tvUserInfo;
         loginOut = binding.btnLoginOut;
+        btn_click = binding.btnClick;
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ImageView muyu = view.findViewById(R.id.iv_muyu);
         muyu.setImageResource(R.drawable.woodfish_purple);
-
+        username = preferences.getString("username", "");
+        score = preferences.getInt("score", 0);
         //点击事件
         loginOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,9 +61,34 @@ public class HomeFragment extends Fragment {
                 JumpToLogin();
             }
         });
+        btn_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "username:" + username);
+                Log.d(TAG, "userInfo:" + userInfo.getText());
+                Api.sendGetRequest("/api/logs/swear?score=1&username=" + username, getActivity(), new Api.VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        JSONObject res = JSONUtil.parseObj(result);
+                        if (res.getStr("code").toString().equals("200")) {
+                            SharedPreferences.Editor editor = preferences.edit();
+                            score = score + 1;
+                            editor.putInt("score", score);
+                            editor.apply();
+                            ToastUtil.showToast(getActivity(), "功德+1");
+                            userInfo.setText(String.format("%s,分数: %d", username, score));
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                });
+            }
+        });
         //检测是否存在记录
-        String username = preferences.getString("username", "");
-        Integer score = preferences.getInt("score", 0);
+
         if (username.isEmpty()) {
             JumpToLogin();
         } else {
