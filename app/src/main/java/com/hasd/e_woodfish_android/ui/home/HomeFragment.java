@@ -71,12 +71,13 @@ public class HomeFragment extends Fragment {
                     public void onSuccess(String result) {
                         JSONObject res = JSONUtil.parseObj(result);
                         if (res.getStr("code").toString().equals("200")) {
+                            JSONObject data = res.getJSONObject("data");
                             SharedPreferences.Editor editor = preferences.edit();
-                            score = score + 1;
-                            editor.putInt("score", score);
+                            HomeFragment.this.score = data.getInt("score");
+                            editor.putInt("score", HomeFragment.this.score);
                             editor.apply();
                             ToastUtil.showToast(getActivity(), "功德+1");
-                            userInfo.setText(String.format("%s,分数: %d", username, score));
+                            userInfo.setText(String.format("%s,分数: %d", username, HomeFragment.this.score));
                         }
                     }
 

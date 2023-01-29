@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,7 @@ public class NotificationsFragment extends Fragment {
         Refresh = binding.btnRefresh;
         table = binding.tlInfo;
 
-        Api.sendGetRequest("https://muyu.hasdsd.cn/api/user/top", getActivity(), new Api.VolleyCallback() {
+        Api.sendGetRequest("/api/user/top", getActivity(), new Api.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
                 JSONObject res = JSONUtil.parseObj(result);
@@ -49,7 +50,44 @@ public class NotificationsFragment extends Fragment {
                     JSONArray data = res.getJSONArray("data");
                     for (int i = 0; i < data.size(); i++) {
                         JSONObject item = data.getJSONObject(i);
-                        
+                        Log.d(TAG, "item:" + item.getStr("username"));
+
+
+                        tableRow = new TableRow(getActivity());
+                        tableRow.setGravity(Gravity.CENTER);
+
+                        TextView textView1 = new TextView(getActivity());
+                        TextView textView2 = new TextView(getActivity());
+                        TextView textView3 = new TextView(getActivity());
+                        Integer Flag = i + 1;
+                        textView1.setText(Flag.toString());
+                        textView2.setText(item.getStr("username"));
+                        textView3.setText(item.getStr("score"));
+                        textView1.setTextSize(15);
+                        textView1.setTypeface(null, Typeface.BOLD);
+                        textView1.setPadding(20, 10, 20, 10);
+                        textView1.setTextColor(getResources().getColor(R.color.white));
+                        textView1.setBackgroundColor(getResources().getColor(R.color.purple_200));
+                        textView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                        textView2.setTextSize(15);
+                        textView2.setTypeface(null, Typeface.BOLD);
+                        textView2.setPadding(20, 10, 20, 10);
+                        textView2.setTextColor(getResources().getColor(R.color.white));
+                        textView2.setBackgroundColor(getResources().getColor(R.color.purple_200));
+                        textView2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                        textView3.setTextSize(15);
+                        textView3.setTypeface(null, Typeface.BOLD);
+                        textView3.setPadding(20, 10, 20, 10);
+                        textView3.setTextColor(getResources().getColor(R.color.white));
+                        textView3.setBackgroundColor(getResources().getColor(R.color.purple_200));
+                        textView3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                        tableRow.addView(textView1);
+                        tableRow.addView(textView2);
+                        tableRow.addView(textView3);
+                        table.addView(tableRow);
                     }
                 }
             }
@@ -59,44 +97,17 @@ public class NotificationsFragment extends Fragment {
 
             }
         });
-        tableRow = new TableRow(getActivity());
-        tableRow.setGravity(Gravity.CENTER);
-        TextView textView1 = new TextView(getActivity());
-        TextView textView2 = new TextView(getActivity());
-        TextView textView3 = new TextView(getActivity());
-
-        textView1.setText("1");
-        textView2.setText("由Java添加的代码");
-        textView3.setText("100");
-        textView1.setTextSize(15);
-        textView1.setTypeface(null, Typeface.BOLD);
-        textView1.setPadding(20, 10, 20, 10);
-        textView1.setTextColor(getResources().getColor(R.color.white));
-        textView1.setBackgroundColor(getResources().getColor(R.color.purple_200));
-        textView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-        textView2.setTextSize(15);
-        textView2.setTypeface(null, Typeface.BOLD);
-        textView2.setPadding(20, 10, 20, 10);
-        textView2.setTextColor(getResources().getColor(R.color.white));
-        textView2.setBackgroundColor(getResources().getColor(R.color.purple_200));
-        textView2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-        textView3.setTextSize(15);
-        textView3.setTypeface(null, Typeface.BOLD);
-        textView3.setPadding(20, 10, 20, 10);
-        textView3.setTextColor(getResources().getColor(R.color.white));
-        textView3.setBackgroundColor(getResources().getColor(R.color.purple_200));
-        textView3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-        tableRow.addView(textView1);
-        tableRow.addView(textView2);
-        tableRow.addView(textView3);
-        table.addView(tableRow);
 
         String username = preferences.getString("username", "");
         Integer score = preferences.getInt("score", 0);
         userInfo.setText(String.format("%s,分数: %d", username, score));
+
+        Refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
         return binding.getRoot();
     }
 
