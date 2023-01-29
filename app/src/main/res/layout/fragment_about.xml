@@ -25,4 +25,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:text="这里是关于页面" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
